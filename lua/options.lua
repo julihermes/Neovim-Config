@@ -10,6 +10,7 @@ vim.o.completeopt = 'menuone,noselect'  -- Set completeopt to have a better comp
 vim.o.termguicolors = true              -- NOTE: You should make sure your terminal supports this
 vim.wo.signcolumn = 'yes'               -- Keep signcolumn on by default
 vim.wo.number = true                    -- Make line numbers default
+vim.wo.relativenumber = true            -- Set relative line numbers
 
 -- TAB configuration
 vim.cmd("set expandtab")
