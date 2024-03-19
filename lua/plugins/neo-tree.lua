@@ -16,9 +16,13 @@ return {
             "node_modules",
             ".git"
           },
+        },
+        follow_current_file = {
+          enabled = true
         }
       }
     })
-    vim.keymap.set("n", "\\", ":Neotree toggle<CR>", {})
+    vim.keymap.set("n", "\\", ":Neotree focus<CR>", {})
+    vim.keymap.set("n", "|", ":Neotree toggle<CR>", {})
   end,
 }
