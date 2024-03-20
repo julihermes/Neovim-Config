@@ -20,5 +20,14 @@ return {
 				enabled = true,
 			},
 		},
+		event_handlers = {
+			{
+				event = "neo_tree_popup_input_ready",
+				handler = function()
+					-- enter input popup with normal mode by default.
+					vim.cmd("stopinsert")
+				end,
+			},
+		},
 	},
 }

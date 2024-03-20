@@ -26,8 +26,8 @@ vim.keymap.set({ "n", "v" }, "<leader>p", [["+p]], { desc = "Paste from system c
 vim.keymap.set({ "n", "v" }, "<leader>P", [["+P]], { desc = "Paste before cursor from system clipboard" })
 
 -- Neo Tree keymaps
-vim.keymap.set("n", "<leader>t", ":Neotree focus<CR>", { desc = "Focus to file tree" })
-vim.keymap.set("n", "<leader>T", ":Neotree toggle<CR>", { desc = "Toggle file tree" })
+vim.keymap.set("n", "\\", ":Neotree focus<CR>", { desc = "Focus to file tree" })
+vim.keymap.set("n", "|", ":Neotree close<CR>", { desc = "Focus to file tree" })
 
 -- Telescope keymaps
 local telescope = require("telescope.builtin")

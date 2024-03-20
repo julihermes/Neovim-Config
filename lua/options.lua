@@ -1,6 +1,8 @@
 vim.g.mapleader = " " -- Set leader key
 vim.g.maplocalleader = " " -- Set local leader key
 vim.g.have_nerd_font = true -- Set to use Nerd Font
+vim.g.loaded_netrw = 1 -- disable netrw
+vim.g.loaded_netrwPlugin = 1 -- disable netrw
 
 vim.opt.breakindent = true -- Enable break indent
 vim.opt.completeopt = "menuone,noselect" -- Set completeopt to have a better completion experience
