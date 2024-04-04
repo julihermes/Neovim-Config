@@ -36,19 +36,15 @@ return {
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 			local servers = {
-				clangd = {},
-
-				lua_ls = {
+				lua_ls = {}, -- Lua LSP
+				tsserver = {}, -- javascript/typescript LSP
+				gopls = {
 					settings = {
-						Lua = {
-							completion = {
-								callSnippet = "Replace",
-							},
+						gopls = {
+							gofumpt = true,
 						},
 					},
-				},
-
-				-- tsserver = {},
+				}, -- Golang LSP
 			}
 
 			require("mason").setup()
@@ -58,6 +54,8 @@ return {
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
+				"prettierd", -- Used to format javascript/typescript code
+				"eslint_d", -- Used to lint javascript/typescript code
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -73,7 +71,7 @@ return {
 		end,
 	},
 
-	{ -- Autoformat
+	{ -- Formatting
 		"stevearc/conform.nvim",
 		opts = {
 			notify_on_error = false,
@@ -94,9 +92,31 @@ return {
 				--
 				-- You can use a sub-list to tell conform to run *until* a formatter
 				-- is found.
-				javascript = { { "prettierd", "prettier" } },
+				javascript = { "prettierd" },
 			},
 		},
+	},
+
+	{ -- Linting
+		"mfussenegger/nvim-lint",
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			local lint = require("lint")
+
+			lint.linters_by_ft = {
+				javascript = { "eslint_d" },
+				typescript = { "eslint_d" },
+			}
+
+			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+
+			vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+				group = lint_augroup,
+				callback = function()
+					lint.try_lint()
+				end,
+			})
+		end,
 	},
 
 	{ -- Autocompletion

@@ -97,8 +97,8 @@ vim.keymap.set("n", "<leader>sk", telescope.keymaps, { desc = "[S]earch [K]eymap
 vim.keymap.set("n", "<C-p>", ":FindFilesGitRoot<CR>", { desc = "[S]earch [F]iles" })
 vim.keymap.set("n", "<leader>sf", telescope.find_files, { desc = "[S]earch [F]iles" })
 vim.keymap.set("n", "<leader>ss", telescope.builtin, { desc = "[S]earch [S]elect Telescope" })
-vim.keymap.set("n", "<leader>sw", ":GrepStringGitRoot<cr>", { desc = "[S]earch current [W]ord" })
-vim.keymap.set("n", "<leader>sg", ":LiveGrepGitRoot<cr>", { desc = "[S]earch by [G]rep" })
+vim.keymap.set("n", "<leader>sw", ":GrepStringGitRoot<CR>", { desc = "[S]earch current [W]ord" })
+vim.keymap.set("n", "<leader>sg", ":LiveGrepGitRoot<CR>", { desc = "[S]earch by [G]rep" })
 vim.keymap.set("n", "<leader>sd", telescope.diagnostics, { desc = "[S]earch [D]iagnostics" })
 vim.keymap.set("n", "<leader>sr", telescope.resume, { desc = "[S]earch [R]esume" })
 vim.keymap.set("n", "<leader>s.", telescope.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
@@ -108,6 +108,7 @@ vim.keymap.set("n", "<leader><leader>", telescope.buffers, { desc = "[ ] Find ex
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("keymaps-config-lsp-attach", { clear = true }),
 	callback = function(event)
+		local conform = require("conform")
 		local map = function(keys, func, desc)
 			vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 		end
@@ -122,8 +123,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 		map("K", vim.lsp.buf.hover, "Hover Documentation")
 		map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+		map("<leader>f", conform.format, "[F]ormat buffer")
 	end,
 })
+
+-- Linting
+local lint = require("lint")
+vim.keymap.set("n", "<leader>l", function()
+	lint.try_lint()
+end, { desc = "LSP: Trigger [L]inting for current file" })
 
 -- Autocompletion
 local cmp = require("cmp")
