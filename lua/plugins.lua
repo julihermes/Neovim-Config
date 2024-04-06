@@ -3,4 +3,5 @@ return {
   { "numToStr/Comment.nvim", opts = {}, lazy = false },
   { "nvim-lualine/lualine.nvim", opts = { options = { theme = "catppuccin" } } },
   { "fedepujol/move.nvim", opts = {} },
+  { "gbprod/substitute.nvim", opts = {} },
 }

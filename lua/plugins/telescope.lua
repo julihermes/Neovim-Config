@@ -12,6 +12,7 @@ return {
           return vim.fn.executable("make") == 1
         end,
       },
+      "debugloop/telescope-undo.nvim",
     },
     config = function()
       local telescope = require("telescope")
@@ -25,6 +26,7 @@ return {
 
       telescope.load_extension("ui-select")
       telescope.load_extension("fzf")
+      telescope.load_extension("undo")
     end,
   },
 }

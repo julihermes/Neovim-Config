@@ -103,6 +103,7 @@ vim.keymap.set("n", "<leader>sd", telescope.diagnostics, { desc = "[S]earch [D]i
 vim.keymap.set("n", "<leader>sr", telescope.resume, { desc = "[S]earch [R]esume" })
 vim.keymap.set("n", "<leader>s.", telescope.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 vim.keymap.set("n", "<leader><leader>", telescope.buffers, { desc = "[ ] Find existing buffers" })
+vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>", { desc = "Open [U]ndotree" })
 
 -- LSP Keymaps
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -237,3 +238,12 @@ require("nvim-treesitter.configs").setup({
     },
   },
 })
+
+-- Substitute
+vim.keymap.set("n", "s", require("substitute").operator, { noremap = true })
+vim.keymap.set("n", "ss", require("substitute").line, { noremap = true })
+vim.keymap.set("n", "S", require("substitute").eol, { noremap = true })
+vim.keymap.set("x", "s", require("substitute").visual, { noremap = true })
+
+-- Lazygit
+-- <leader>lg to open Lazygit (setting in plugin config)
