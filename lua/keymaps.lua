@@ -1,35 +1,90 @@
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear highlight pressing <Esc> in normal mode" })
-
--- Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
-
--- Disable arrow keys in normal mode
+--[[ General ]]
 vim.keymap.set("n", "<left>", '<cmd>echo "Use h to move."<CR>')
 vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move."<CR>')
 vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move."<CR>')
 vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move."<CR>')
-
---  Use CTRL+<hjkl> to switch between windows
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear highlight pressing <Esc> in normal mode" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
-
--- System clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Copy to system clipboard" })
 vim.keymap.set({ "n", "v" }, "<leader>yy", [["+yy]], { desc = "Copy line to system clipboard" })
 vim.keymap.set({ "n", "v" }, "<leader>Y", [["+Y]], { desc = "Copy to cursor from endline to system clipboard" })
 vim.keymap.set({ "n", "v" }, "<leader>p", [["+p]], { desc = "Paste from system clipboard" })
 vim.keymap.set({ "n", "v" }, "<leader>P", [["+P]], { desc = "Paste before cursor from system clipboard" })
+vim.keymap.set("n", "<leader>aa", "ggVG", { desc = "Select all lines" })
 
--- Neo Tree keymaps
+--[[ Move ]]
+local opts = { desc = "", noremap = true, silent = true }
+opts.desc = "Move line down"
+vim.keymap.set("n", "<A-j>", ":MoveLine(1)<CR>", opts)
+opts.desc = "Move line up"
+vim.keymap.set("n", "<A-k>", ":MoveLine(-1)<CR>", opts)
+opts.desc = "Move the character to the left"
+vim.keymap.set("n", "<A-h>", ":MoveHChar(-1)<CR>", opts)
+opts.desc = "Move the character to the rigth"
+vim.keymap.set("n", "<A-l>", ":MoveHChar(1)<CR>", opts)
+opts.desc = "Move the word forwards"
+vim.keymap.set("n", "<leader>wf", ":MoveWord(1)<CR>", opts)
+opts.desc = "Move the word backwards"
+vim.keymap.set("n", "<leader>wb", ":MoveWord(-1)<CR>", opts)
+opts.desc = "Move block down"
+vim.keymap.set("v", "<A-j>", ":MoveBlock(1)<CR>", opts)
+opts.desc = "Move block up"
+vim.keymap.set("v", "<A-k>", ":MoveBlock(-1)<CR>", opts)
+opts.desc = "Move block left"
+vim.keymap.set("v", "<A-h>", ":MoveHBlock(-1)<CR>", opts)
+opts.desc = "Move block rigth"
+vim.keymap.set("v", "<A-l>", ":MoveHBlock(1)<CR>", opts)
+
+--[[ Neo Tree ]]
 vim.keymap.set("n", "\\", ":Neotree focus<CR>", { desc = "Focus to file tree" })
 vim.keymap.set("n", "|", ":Neotree close<CR>", { desc = "Focus to file tree" })
 
--- Telescope keymaps
+--[[ Substitute ]]
+local sub = require("substitute")
+vim.keymap.set("n", "s", sub.operator, { desc = "Substitute operator, use with a motion", noremap = true })
+vim.keymap.set("n", "ss", sub.line, { desc = "Substitute a line", noremap = true })
+vim.keymap.set("n", "S", sub.eol, { desc = "Substitute from the cursor to end of line", noremap = true })
+vim.keymap.set("x", "s", sub.visual, { desc = "Substitute operator in visual mode", noremap = true })
+local subr = require("substitute.range")
+vim.keymap.set("n", "<leader>s", subr.operator, { desc = "Range operator, use with two motion", noremap = true })
+vim.keymap.set("x", "<leader>s", subr.visual, { desc = "Range operator in visual mode", noremap = true })
+vim.keymap.set("n", "<leader>ss", subr.word, { desc = "Range operator for current word", noremap = true })
+
+--[[ Harpoon ]]
+local harpoon = require("harpoon")
+vim.keymap.set("n", "<leader>ha", function()
+  harpoon:list():add()
+end, { desc = "[A]dd to [H]arpoon" })
+vim.keymap.set("n", "<leader>h", function()
+  harpoon.ui:toggle_quick_menu(harpoon:list())
+end, { desc = "Open [H]arpoon list" })
+vim.keymap.set("n", "<leader>1", function()
+  harpoon:list():select(1)
+end, { desc = "Open [1]first harpoon buffer" })
+vim.keymap.set("n", "<leader>2", function()
+  harpoon:list():select(2)
+end, { desc = "Open [2]second harpoon buffer" })
+vim.keymap.set("n", "<leader>3", function()
+  harpoon:list():select(3)
+end, { desc = "Open [3]third harpoon buffer" })
+vim.keymap.set("n", "<leader>4", function()
+  harpoon:list():select(4)
+end, { desc = "Open [4]fourth harpoon buffer" })
+vim.keymap.set("n", "<A-p>", function()
+  harpoon:list():prev({ ui_nav_wrap = true })
+end, { desc = "Open [P]revious harpoon buffer" })
+vim.keymap.set("n", "<A-n>", function()
+  harpoon:list():next({ ui_nav_wrap = true })
+end, { desc = "Open [N]ext harpoon buffer" })
+
+--[[ Telescope ]]
 local telescope = require("telescope.builtin")
 
 local function find_git_root()
@@ -92,18 +147,18 @@ vim.api.nvim_create_user_command("FindFilesGitRoot", find_files_git_root, {})
 vim.api.nvim_create_user_command("LiveGrepGitRoot", live_grep_git_root, {})
 vim.api.nvim_create_user_command("GrepStringGitRoot", grep_string_git_root, {})
 
-vim.keymap.set("n", "<leader>sh", telescope.help_tags, { desc = "[S]earch [H]elp" })
-vim.keymap.set("n", "<leader>sk", telescope.keymaps, { desc = "[S]earch [K]eymaps" })
-vim.keymap.set("n", "<C-p>", ":FindFilesGitRoot<CR>", { desc = "[S]earch [F]iles" })
-vim.keymap.set("n", "<leader>sf", telescope.find_files, { desc = "[S]earch [F]iles" })
-vim.keymap.set("n", "<leader>ss", telescope.builtin, { desc = "[S]earch [S]elect Telescope" })
-vim.keymap.set("n", "<leader>sw", ":GrepStringGitRoot<CR>", { desc = "[S]earch current [W]ord" })
-vim.keymap.set("n", "<leader>sg", ":LiveGrepGitRoot<CR>", { desc = "[S]earch by [G]rep" })
-vim.keymap.set("n", "<leader>sd", telescope.diagnostics, { desc = "[S]earch [D]iagnostics" })
-vim.keymap.set("n", "<leader>sr", telescope.resume, { desc = "[S]earch [R]esume" })
-vim.keymap.set("n", "<leader>s.", telescope.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+vim.keymap.set("n", "<C-p>", ":FindFilesGitRoot<CR>", { desc = "[F]ind [F]iles" })
+vim.keymap.set("n", "<leader>ff", telescope.find_files, { desc = "[F]ind [F]iles" })
+vim.keymap.set("n", "<leader>fk", telescope.keymaps, { desc = "[F]ind [K]eymaps" })
+vim.keymap.set("n", "<leader>fw", ":GrepStringGitRoot<CR>", { desc = "[F]ind current [W]ord" })
+vim.keymap.set("n", "<leader>fg", ":LiveGrepGitRoot<CR>", { desc = "[F]ind by [G]rep" })
+vim.keymap.set("n", "<leader>fd", telescope.diagnostics, { desc = "[F]ind [D]iagnostics" })
+vim.keymap.set("n", "<leader>fr", telescope.resume, { desc = "[F]ind [R]esume" })
+vim.keymap.set("n", "<leader>f.", telescope.oldfiles, { desc = '[F]ind Recent Files ("." for repeat)' })
 vim.keymap.set("n", "<leader><leader>", telescope.buffers, { desc = "[ ] Find existing buffers" })
 vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>", { desc = "Open [U]ndotree" })
+vim.keymap.set("n", "<leader>fh", telescope.help_tags, { desc = "[F]ind [H]elp" })
+vim.keymap.set("n", "<leader>ft", telescope.builtin, { desc = "[F]ind [S]elect Telescope" })
 
 -- LSP Keymaps
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -238,12 +293,6 @@ require("nvim-treesitter.configs").setup({
     },
   },
 })
-
--- Substitute
-vim.keymap.set("n", "s", require("substitute").operator, { noremap = true })
-vim.keymap.set("n", "ss", require("substitute").line, { noremap = true })
-vim.keymap.set("n", "S", require("substitute").eol, { noremap = true })
-vim.keymap.set("x", "s", require("substitute").visual, { noremap = true })
 
 -- Lazygit
 -- <leader>lg to open Lazygit (setting in plugin config)
