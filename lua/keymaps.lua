@@ -160,7 +160,7 @@ vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>", { desc = "Open [U]nd
 vim.keymap.set("n", "<leader>fh", telescope.help_tags, { desc = "[F]ind [H]elp" })
 vim.keymap.set("n", "<leader>ft", telescope.builtin, { desc = "[F]ind [S]elect Telescope" })
 
--- LSP Keymaps
+--[[ LSP ]]
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("keymaps-config-lsp-attach", { clear = true }),
   callback = function(event)
@@ -237,7 +237,7 @@ cmp.setup({
   }),
 })
 
--- Treesitter keymaps
+--[[ Treesitter ]]
 ---@diagnostic disable-next-line: missing-fields
 require("nvim-treesitter.configs").setup({
   textobjects = {
@@ -293,6 +293,11 @@ require("nvim-treesitter.configs").setup({
     },
   },
 })
+
+--[[ Trouble ]]
+vim.keymap.set("n", "<leader>q", function()
+  require("trouble").toggle()
+end)
 
 -- Lazygit
 -- <leader>lg to open Lazygit (setting in plugin config)
