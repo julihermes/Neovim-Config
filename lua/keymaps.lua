@@ -43,8 +43,8 @@ opts.desc = "Move block rigth"
 vim.keymap.set("v", "<A-l>", ":MoveHBlock(1)<CR>", opts)
 
 --[[ Neo Tree ]]
-vim.keymap.set("n", "\\", ":Neotree focus<CR>", { desc = "Focus to file tree" })
-vim.keymap.set("n", "|", ":Neotree close<CR>", { desc = "Focus to file tree" })
+vim.keymap.set("n", "\\", ":SFMFocus<CR>", { desc = "Focus to file tree" })
+vim.keymap.set("n", "|", ":SFMToggle<CR>", { desc = "Focus to file tree" })
 
 --[[ Substitute ]]
 local sub = require("substitute")
