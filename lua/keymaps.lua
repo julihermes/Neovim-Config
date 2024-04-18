@@ -113,7 +113,7 @@ end
 local function find_files_git_root()
   local git_root = find_git_root()
   if git_root then
-    telescope.git_files()
+    telescope.git_files({ show_untracked = true })
   else
     telescope.find_files()
   end

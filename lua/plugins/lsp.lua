@@ -56,6 +56,7 @@ return {
         "stylua", -- Used to format Lua code
         "prettierd", -- Used to format javascript/typescript code
         "eslint_d", -- Used to lint javascript/typescript code
+        "beautysh", -- Used to format Sheel Script code
       })
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -93,6 +94,7 @@ return {
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         javascript = { "prettierd" },
+        sh = { "beautysh" },
       },
     },
   },
