@@ -37,14 +37,15 @@ return {
 
       local servers = {
         lua_ls = {}, -- Lua LSP
+        eslint = {}, -- ESLint LSP
         tsserver = {}, -- javascript/typescript LSP
-        gopls = {
+        gopls = { -- Golang LSP
           settings = {
             gopls = {
               gofumpt = true,
             },
           },
-        }, -- Golang LSP
+        },
       }
 
       require("mason").setup()
@@ -54,8 +55,6 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         "stylua", -- Used to format Lua code
-        "prettierd", -- Used to format javascript/typescript code
-        "eslint_d", -- Used to lint javascript/typescript code
         "beautysh", -- Used to format Sheel Script code
       })
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
@@ -88,12 +87,6 @@ return {
       end,
       formatters_by_ft = {
         lua = { "stylua" },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        javascript = { "prettierd" },
         sh = { "beautysh" },
       },
     },
@@ -106,8 +99,7 @@ return {
       local lint = require("lint")
 
       lint.linters_by_ft = {
-        javascript = { "eslint_d" },
-        typescript = { "eslint_d" },
+        -- javascript = { "eslint" },
       }
 
       local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
