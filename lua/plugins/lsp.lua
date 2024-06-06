@@ -43,8 +43,12 @@ return {
           settings = {
             gopls = {
               gofumpt = true,
+              staticcheck = true,
+              usePlaceholders = true,
+              semanticTokens = true,
             },
           },
+          filetypes = { "go", "gomod", "gowork", "gotmpl" },
         },
       }
 
